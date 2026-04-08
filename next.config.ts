@@ -14,9 +14,11 @@ function buildCsp(): string {
     }
   }
 
-  // Next.js dev runtime injects inline scripts and uses eval-like tooling for HMR.
+  // Next.js runtime uses inline bootstrapping scripts in both dev and prod.
+  // Keep eval restricted to development only.
+  scriptSrc.push("'unsafe-inline'");
   if (!isProd) {
-    scriptSrc.push("'unsafe-inline'", "'unsafe-eval'");
+    scriptSrc.push("'unsafe-eval'");
   }
 
   return [
