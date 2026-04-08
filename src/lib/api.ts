@@ -6,13 +6,14 @@ export async function recommendArticle(payload: RecommendRequest): Promise<Recom
   if (!baseUrl) {
     throw new Error("NEXT_PUBLIC_API_BASE_URL belum diset.");
   }
+  const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
 
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (clientApiKey) {
     headers["X-API-Key"] = clientApiKey;
   }
 
-  const res = await fetch(`${baseUrl}/recommend`, {
+  const res = await fetch(`${normalizedBaseUrl}/recommend`, {
     method: "POST",
     headers,
     body: JSON.stringify(payload),
